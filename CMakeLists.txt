@@ -7,11 +7,11 @@ aux_source_directory(devicehub SRC_LIB_LIST)
 aux_source_directory(src SRC_LIST)
 
 cmake_policy(SET CMP0016 OLD)
-add_definitions(-std=c++11) 
+add_definitions(-std=c++11)
 
-add_executable(${PROJECT_NAME} ${SRC_LIST})
+add_executable(${PROJECT_NAME} ${SRC_LIST} ${SRC_LIB_LIST})
 
-add_library(devicehub ${SRC_LIB_LIST})
+add_library(devicehub SHARED ${SRC_LIB_LIST})
 
 include_directories("${CMAKE_SOURCE_DIR}/devicehub")
 
@@ -60,18 +60,33 @@ elseif(UNIX)
 endif()
 
 SET_TARGET_PROPERTIES(${PROJECT_NAME} PROPERTIES LINKER_LANGUAGE CXX)
-target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES} ${SYSLOGPP_LIBRARY} -lpqxx)
+
+find_package(Mosquitto)
+if(MOSQUITTO_FOUND)
+  include_directories(${MOSQUITTO_INCLUDE_DIRS})
+  target_link_libraries (${PROJECT_NAME} ${MOSQUITTO_LIBRARIES})
+  target_link_libraries (devicehub ${MOSQUITTO_LIBRARIES})
+endif (MOSQUITTO_FOUND)
+
+find_package(Mosquittopp)
+if(MOSQUITTOPP_FOUND)
+  include_directories(${MOSQUITTOPP_INCLUDE_DIRS})
+  target_link_libraries (${PROJECT_NAME} ${MOSQUITTOPP_LIBRARIES})
+  target_link_libraries (devicehub ${MOSQUITTOPP_LIBRARIES})
+endif (MOSQUITTOPP_FOUND)
 
 find_package(OpenSSL)
 if(OPENSSL_FOUND)
   include_directories(${OPENSSL_INCLUDE_DIRS})
   target_link_libraries (${PROJECT_NAME} ${OPENSSL_LIBRARIES})
+  target_link_libraries (devicehub ${OPENSSL_LIBRARIES})
 endif(OPENSSL_FOUND)
 
 find_package(LibCURL)
 if(LIBCURL_FOUND)
  include_directories(${LibCURL_INCLUDE_DIR})
  target_link_libraries(${PROJECT_NAME} ${LibCURL_LIBRARIES})
+ target_link_libraries(devicehub ${LibCURL_LIBRARIES})
 endif(LIBCURL_FOUND)
 
 INSTALL(TARGETS ${PROJECT_NAME} DESTINATION bin)
