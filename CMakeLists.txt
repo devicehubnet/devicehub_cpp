@@ -61,6 +61,8 @@ elseif(UNIX)
        set(Boost_USE_STATIC_LIBS OFF)
        find_package(Boost REQUIRED COMPONENTS regex thread program_options system)
     endif(USE_STATIC_BOOST)
+    target_link_libraries(${PROJECT_NAME} -luuid)
+    target_link_libraries(devicehub -luuid)
 endif()
 
 SET_TARGET_PROPERTIES(${PROJECT_NAME} PROPERTIES LINKER_LANGUAGE CXX)

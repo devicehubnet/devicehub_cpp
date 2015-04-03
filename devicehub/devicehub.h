@@ -9,6 +9,7 @@
 #include <list>
 #include <time.h>
 #include <chrono>
+#include <functional>
 
 using namespace std;
 
