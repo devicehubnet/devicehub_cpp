@@ -1,6 +1,7 @@
 #include <iostream>
 #include <chrono>
 #include <ctime>
+#include <unistd.h>
 #include <devicehub.h>
 
 using namespace std;
@@ -47,27 +48,48 @@ project_id_t  myProjectId = 16;
 device_uuid_t myDeviceId  = "abcdefg";
 
 int main() {
+    int rc = 0;
+
+    auto func = [] () { cout << "Hello world"; };
 
     DeviceHub dh(myProjectId, myDeviceId, myApiKey);
 
     dh.connect();
 
+    dh.addSensor("temperature", "numeric");
+    dh.addSensor("humidity", "numeric");
+
     dh.addValue("temperature", 10);
     dh.addValue("humidity", 50);
+
+    dh.addActuator("Main_Room_Lights", [] (int val) -> void {
+            clog<<"something"<<endl;
+    });
+
+
     dh.send();
 
+    while(true) {
+        rc = dh.loop();
+        if(rc) {
+            clog<<"rc:"<<rc<<endl;
+            dh.connect();
+        }
+        usleep(100);
+    }
 
-    jrd::time::Timer timer(true);
-    // Kill some time
-    for (int i = 0; i < 1000000000; i++)
-        ;
-    std::cout << "Elapsed time: " << std::fixed << timer << "ms\n";
-    timer.Reset();
-    // Kill some more time
-    for (int i = 0; i < 10000000; i++)
-        ;
-    auto elapsed = timer.Elapsed();
-    std::cout << "Elapsed time: " << std::fixed << elapsed.count() << "ms\n";
+
+//    jrd::time::Timer timer(true);
+//    // Kill some time
+//    for (int i = 0; i < 1000000000; i++)
+//        ;
+//    std::cout << "Elapsed time: " << std::fixed << timer << "ms\n";
+//    timer.Reset();
+//    // Kill some more time
+//    for (int i = 0; i < 10000000; i++)
+//        ;
+//    auto elapsed = timer.Elapsed();
+//    std::cout << "Elapsed time: " << std::fixed << elapsed.count() << "ms\n";
 
     return 0;
 }
