@@ -33,6 +33,7 @@ namespace devicehub {
         void on_connect(int rc);
         void on_message(const struct mosquitto_message *message);
         void on_subscribe(int mid, int qos_count, const int *granted_qos);
+        void on_publish();
         enum sensorTypes {
             NUMERIC = 0,
             DIGITAL
@@ -43,6 +44,8 @@ namespace devicehub {
         std::map<std::string, std::map<chrono::milliseconds, double>>::iterator sensorListIterator;
         std::map<std::string, int> actuatorList;
         api_key_t api_key;
+        project_id_t project_id;
+        device_uuid_t device_id;
     };
 }
 
