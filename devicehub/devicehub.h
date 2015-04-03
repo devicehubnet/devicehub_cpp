@@ -47,6 +47,7 @@ namespace devicehub {
         api_key_t api_key;
         project_id_t project_id;
         device_uuid_t device_id;
+        bool connected;
     };
 }
 

@@ -64,7 +64,7 @@ int main() {
     dh.addValue("temperature", 10);
     dh.addValue("humidity", 50);
 
-     usleep(20000);
+    usleep(20000);
 
     dh.addValue("temperature", 30);
     dh.addValue("humidity", 60);
@@ -80,7 +80,7 @@ int main() {
     dh.listValues("humidity");
 
     while(run) {
-        rc = dh.loop();
+        //rc = dh.loop();
         if(rc) {
             clog<<"rc:"<<rc<<endl;
             dh.connect();

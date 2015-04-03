@@ -8,11 +8,13 @@ devicehub::DeviceHub::DeviceHub(project_id_t project_id, device_uuid_t device_id
     uuid_copy(this->api_key, api_key);
     this->project_id = project_id;
     uuid_copy(this->device_id, device_id);
+    connected = false;
 }
 
 void devicehub::DeviceHub::connect(const char * hostname, unsigned int port, unsigned int keepalive) {
     clog<<__FUNCTION__<<endl;
     mosqpp::mosquittopp::connect(hostname, port, keepalive);
+    loop_start();
 }
 
 void devicehub::DeviceHub::autoconfigure() {
@@ -25,6 +27,8 @@ void devicehub::DeviceHub::disconnect() {
 
 void devicehub::DeviceHub::on_connect(int rc) {
     clog<<__FUNCTION__<<endl;
+    clog<<"Connected with rc "<<rc<<endl;
+    if(rc == 0) connected = true;
 }
 
 void devicehub::DeviceHub::on_message(const struct mosquitto_message *message) {
@@ -33,6 +37,7 @@ void devicehub::DeviceHub::on_message(const struct mosquitto_message *message) {
 
 void devicehub::DeviceHub::on_subscribe(int mid, int qos_count, const int *granted_qos) {
     clog<<__FUNCTION__<<endl;
+    clog<<"Subscribed to topic " << endl;
 }
 
 void devicehub::DeviceHub::on_publish() {
@@ -41,6 +46,9 @@ void devicehub::DeviceHub::on_publish() {
 
 void devicehub::DeviceHub::send() {
     clog<<__FUNCTION__<<endl;
+
+    while(!connected);
+
     for(auto outer_iter=sensorList.begin(); outer_iter!=sensorList.end(); ++outer_iter) {
         for(auto inner_iter=outer_iter->second.begin(); inner_iter!=outer_iter->second.end(); ++inner_iter) {
             clog << "DEBUG: " << outer_iter->first << " " << inner_iter->first.count() << " " << inner_iter->second << endl;
@@ -53,6 +61,9 @@ void devicehub::DeviceHub::send() {
             mqtt_topic << project_id;
             mqtt_topic << "/device/" << device_id;
             mqtt_topic << "/sensor/" << outer_iter->first;
+
+            mqtt_payload << "test 12 3";
+
             clog << "DEBUG: MQTT TOPIC: "<< mqtt_topic.str()<<endl;
             publish(&mid, mqtt_topic.str().c_str(), mqtt_payload.str().length(), mqtt_payload.str().c_str());
         }
@@ -67,6 +78,18 @@ void devicehub::DeviceHub::addSensor(std::string name, std::string type) {
 
 void devicehub::DeviceHub::addActuator(std::string name, std::function <void(int val)> f) {
     clog<<__FUNCTION__<<endl;
+    int mid;
+    std::stringstream mqtt_topic;
+
+    mqtt_topic << "/a/";
+    mqtt_topic << api_key;
+    mqtt_topic << "/p/";
+    mqtt_topic << project_id;
+    mqtt_topic << "/device/" << device_id;
+    mqtt_topic << "/actuator/state";
+
+
+    subscribe(&mid, mqtt_topic.str().c_str());
 }
 
 void devicehub::DeviceHub::addValue(std::string name, double value) {
