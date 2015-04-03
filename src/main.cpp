@@ -3,6 +3,7 @@
 #include <ctime>
 #include <unistd.h>
 #include <devicehub.h>
+#include <random>
 
 using namespace std;
 using namespace devicehub;
@@ -65,6 +66,7 @@ void timer_test() {
 
 int main() {
     int rc = 0;
+    std::random_device rd;
 
     auto func = [] () { cout << "Hello world"; };
 
@@ -75,13 +77,13 @@ int main() {
     dh.addSensor("temperature", "numeric");
     dh.addSensor("humidity", "numeric");
 
-    dh.addValue("temperature", 10);
-    dh.addValue("humidity", 50);
+    dh.addValue("temperature", std::rand());
+    dh.addValue("humidity", std::rand());
 
     usleep(20000);
 
-    dh.addValue("temperature", 30);
-    dh.addValue("humidity", 60);
+    dh.addValue("temperature", std::rand());
+    dh.addValue("humidity", std::rand());
 
     dh.addActuator("Main_Room_Lights", [] (int val) -> void {
             clog<<"something"<<endl;
