@@ -7,12 +7,13 @@ aux_source_directory(devicehub SRC_LIB_LIST)
 aux_source_directory(src SRC_LIST)
 
 cmake_policy(SET CMP0016 OLD)
+add_definitions(-std=c++11) 
 
 add_executable(${PROJECT_NAME} ${SRC_LIST})
 
-add_library(${PROJECT_NAME} ${SRC_LIB_LIST})
+add_library(devicehub ${SRC_LIB_LIST})
 
-include_directories("${CMAKE_SOURCE_DIR}")
+include_directories("${CMAKE_SOURCE_DIR}/devicehub")
 
 SET(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 
@@ -75,7 +76,10 @@ endif(LIBCURL_FOUND)
 
 INSTALL(TARGETS ${PROJECT_NAME} DESTINATION bin)
 
-SET(CPACK_GENERATOR "DEB")
+if(APPLE)
+elseif(UNIX)
+    SET(CPACK_GENERATOR "DEB")
+endif()
 SET(CPACK_PACKAGE_VERSION ${VERSION})
 SET(CPACK_DEBIAN_PACKAGE_MAINTAINER "Ionut Cotoi")
 SET(CPACK_PACKAGE_VENDOR "devicehub.net")
