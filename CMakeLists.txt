@@ -7,7 +7,6 @@ aux_source_directory(devicehub SRC_LIB_LIST)
 aux_source_directory(src SRC_LIST)
 
 cmake_policy(SET CMP0016 OLD)
-cmake_policy(SET CMP0042 OLD)
 
 add_definitions(-std=c++11)
 add_definitions(-ferror-limit=4)
@@ -23,6 +22,8 @@ SET(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH}
 SET(CMAKE_BUILD_TYPE Debug)
 
 if(APPLE)
+    cmake_policy(SET CMP0042 OLD)
+
     option(USE_STATIC_BOOST "Build with static BOOST libraries instead of dynamic" NO)
     set(Boost_USE_MULTITHREADED OFF)
     unset(Boost_INCLUDE_DIR CACHE)
