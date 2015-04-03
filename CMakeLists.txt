@@ -7,6 +7,7 @@ aux_source_directory(devicehub SRC_LIB_LIST)
 aux_source_directory(src SRC_LIST)
 
 cmake_policy(SET CMP0016 OLD)
+cmake_policy(SET CMP0042 OLD)
 add_definitions(-std=c++11)
 
 add_executable(${PROJECT_NAME} ${SRC_LIST} ${SRC_LIB_LIST})
