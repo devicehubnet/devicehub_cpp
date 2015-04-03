@@ -49,6 +49,20 @@ project_id_t  myProjectId = 16;
 device_uuid_t myDeviceId  = "abcdefg";
 bool run = true;
 
+void timer_test() {
+    jrd::time::Timer timer(true);
+    // Kill some time
+    for (int i = 0; i < 1000000000; i++)
+        ;
+    std::cout << "Elapsed time: " << std::fixed << timer << "ms\n";
+    timer.Reset();
+    // Kill some more time
+    for (int i = 0; i < 10000000; i++)
+        ;
+    auto elapsed = timer.Elapsed();
+    std::cout << "Elapsed time: " << std::fixed << elapsed.count() << "ms\n";
+}
+
 int main() {
     int rc = 0;
 
@@ -80,26 +94,9 @@ int main() {
     dh.listValues("humidity");
 
     while(run) {
-        //rc = dh.loop();
-        if(rc) {
-            clog<<"rc:"<<rc<<endl;
-            dh.connect();
-        }
+        // Do something usefull here
         usleep(100);
     }
-
-
-//    jrd::time::Timer timer(true);
-//    // Kill some time
-//    for (int i = 0; i < 1000000000; i++)
-//        ;
-//    std::cout << "Elapsed time: " << std::fixed << timer << "ms\n";
-//    timer.Reset();
-//    // Kill some more time
-//    for (int i = 0; i < 10000000; i++)
-//        ;
-//    auto elapsed = timer.Elapsed();
-//    std::cout << "Elapsed time: " << std::fixed << elapsed.count() << "ms\n";
 
     return 0;
 }
