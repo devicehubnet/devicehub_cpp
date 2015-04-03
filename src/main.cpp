@@ -12,6 +12,7 @@ using namespace devicehub;
 #else
 #include <chrono>
 #include <ostream>
+
 namespace jrd {
     namespace time {
         class Timer {
@@ -46,6 +47,7 @@ namespace jrd {
 api_key_t     myApiKey    = "test";
 project_id_t  myProjectId = 16;
 device_uuid_t myDeviceId  = "abcdefg";
+bool run = true;
 
 int main() {
     int rc = 0;
@@ -62,6 +64,11 @@ int main() {
     dh.addValue("temperature", 10);
     dh.addValue("humidity", 50);
 
+     usleep(20000);
+
+    dh.addValue("temperature", 30);
+    dh.addValue("humidity", 60);
+
     dh.addActuator("Main_Room_Lights", [] (int val) -> void {
             clog<<"something"<<endl;
     });
@@ -69,7 +76,10 @@ int main() {
 
     dh.send();
 
-    while(true) {
+    dh.listValues("temperature");
+    dh.listValues("humidity");
+
+    while(run) {
         rc = dh.loop();
         if(rc) {
             clog<<"rc:"<<rc<<endl;
