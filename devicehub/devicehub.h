@@ -13,6 +13,11 @@
 
 using namespace std;
 
+#ifndef _UUID_STRING_T
+#define _UUID_STRING_T
+typedef char uuid_string_t[37]
+#endif
+
 namespace devicehub {
 
     typedef uuid_string_t device_uuid_t;
