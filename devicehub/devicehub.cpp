@@ -1,13 +1,14 @@
 #include "devicehub.h"
 #include <sstream>
+#include <string.h>
 
 devicehub::DeviceHub::DeviceHub(project_id_t project_id, device_uuid_t device_id, api_key_t api_key) : mosquittopp() {
     clog<<__FUNCTION__<<endl;
     mosqpp::lib_init();
 
-    uuid_copy(this->api_key, api_key);
+    strncpy(this->api_key, api_key, sizeof(uuid_string_t));
     this->project_id = project_id;
-    uuid_copy(this->device_id, device_id);
+    strncpy(this->device_id, device_id, sizeof(uuid_string_t));
     connected = false;
 }
 

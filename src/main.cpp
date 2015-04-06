@@ -45,9 +45,9 @@ namespace jrd {
 }
 #endif
 
-api_key_t     myApiKey    = "test";
-project_id_t  myProjectId = 16;
-device_uuid_t myDeviceId  = "abcdefg";
+api_key_t     myApiKey    = "a8b274d9-4484-4103-8214-e6db353abbd9";
+project_id_t  myProjectId = 235;
+device_uuid_t myDeviceId  = "887ffe97-0719-4562-94db-91a86e2e7c49";
 bool run = true;
 
 void timer_test() {
@@ -77,13 +77,8 @@ int main() {
     dh.addSensor("temperature", "numeric");
     dh.addSensor("humidity", "numeric");
 
-    dh.addValue("temperature", std::rand());
-    dh.addValue("humidity", std::rand());
-
-    usleep(20000);
-
-    dh.addValue("temperature", std::rand());
-    dh.addValue("humidity", std::rand());
+//    dh.addValue("temperature", std::rand());
+//    dh.addValue("humidity", std::rand());
 
     dh.addActuator("Main_Room_Lights", [] (int val) -> void {
             clog<<"something"<<endl;
@@ -98,6 +93,11 @@ int main() {
     while(run) {
         // Do something usefull here
         usleep(100);
+
+        dh.addValue("temperature", std::rand());
+        dh.addValue("humidity", std::rand());
+        dh.send();
+        usleep(1000000);
     }
 
     return 0;

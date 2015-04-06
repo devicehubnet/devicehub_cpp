@@ -15,8 +15,8 @@ using namespace std;
 
 namespace devicehub {
 
-    typedef uuid_t device_uuid_t;
-    typedef uuid_t api_key_t;
+    typedef uuid_string_t device_uuid_t;
+    typedef uuid_string_t api_key_t;
     typedef uint64_t project_id_t;
 
     class DeviceHub : public mosqpp::mosquittopp {
