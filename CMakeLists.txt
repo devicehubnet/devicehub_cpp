@@ -21,7 +21,6 @@ SET(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH}
 SET(CMAKE_BUILD_TYPE Debug)
 
 
-find_package(UUID)
 
 if(APPLE)
     cmake_policy(SET CMP0042 OLD)
@@ -97,6 +96,15 @@ if(LIBCURL_FOUND)
  target_link_libraries(${PROJECT_NAME} ${LibCURL_LIBRARIES})
  target_link_libraries(devicehub ${LibCURL_LIBRARIES})
 endif(LIBCURL_FOUND)
+
+
+find_package(UUID)
+if(UUID_FOUND)
+ include_directories(${UUID_INCLUDE_DIR})
+ target_link_libraries(${PROJECT_NAME} ${UUID_LIBRARY})
+ target_link_libraries(devicehub ${UUID_LIBRARY})
+endif(UUID_FOUND)
+
 
 INSTALL(TARGETS ${PROJECT_NAME} DESTINATION bin)
 
