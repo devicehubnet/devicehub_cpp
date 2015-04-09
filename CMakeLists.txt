@@ -20,6 +20,9 @@ SET(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH}
 
 SET(CMAKE_BUILD_TYPE Debug)
 
+
+find_package(UUID)
+
 if(APPLE)
     cmake_policy(SET CMP0042 OLD)
     add_definitions(-ferror-limit=4)
