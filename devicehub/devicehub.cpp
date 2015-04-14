@@ -1,13 +1,14 @@
 #include "devicehub.h"
 #include <sstream>
+#include <string.h>
 
 devicehub::DeviceHub::DeviceHub(project_id_t project_id, device_uuid_t device_id, api_key_t api_key) : mosquittopp() {
     clog<<__FUNCTION__<<endl;
     mosqpp::lib_init();
 
-    uuid_copy(this->api_key, api_key);
+    strncpy(this->api_key, api_key, sizeof(uuid_string_t));
     this->project_id = project_id;
-    uuid_copy(this->device_id, device_id);
+    strncpy(this->device_id, device_id, sizeof(uuid_string_t));
     connected = false;
 }
 
@@ -62,7 +63,7 @@ void devicehub::DeviceHub::send() {
             mqtt_topic << "/device/" << device_id;
             mqtt_topic << "/sensor/" << outer_iter->first;
 
-            mqtt_payload << "test 12 3";
+            mqtt_payload << inner_iter->second;
 
             clog << "DEBUG: MQTT TOPIC: "<< mqtt_topic.str()<<endl;
             publish(&mid, mqtt_topic.str().c_str(), mqtt_payload.str().length(), mqtt_payload.str().c_str());
