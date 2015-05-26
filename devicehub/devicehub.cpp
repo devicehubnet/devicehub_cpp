@@ -62,6 +62,7 @@ void devicehub::DeviceHub::send() {
             mqtt_topic << project_id;
             mqtt_topic << "/device/" << device_id;
             mqtt_topic << "/sensor/" << outer_iter->first;
+            mqtt_topic << "/data";
 
             mqtt_payload << inner_iter->second;
 
@@ -87,8 +88,8 @@ void devicehub::DeviceHub::addActuator(std::string name, std::function <void(int
     mqtt_topic << "/p/";
     mqtt_topic << project_id;
     mqtt_topic << "/device/" << device_id;
-    mqtt_topic << "/actuator/state";
-
+    mqtt_topic << "/actuator/" << name;
+    mqtt_topic << "/state";
 
     subscribe(&mid, mqtt_topic.str().c_str());
 }
@@ -122,5 +123,3 @@ void devicehub::DeviceHub::listValues(std::string sensor_name) {
 devicehub::DeviceHub::~DeviceHub() {
     clog<<__FUNCTION__<<endl;
 }
-
-

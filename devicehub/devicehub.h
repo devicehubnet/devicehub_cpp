@@ -28,7 +28,7 @@ namespace devicehub {
     public:
         DeviceHub(project_id_t project_id, device_uuid_t device_id, api_key_t api_key);
         ~DeviceHub();
-        void connect(const char * hostname = "io.dev.devicehub.net", unsigned int port = 1883, unsigned int keepalive = 60);
+        void connect(const char * hostname = "mqtt.devicehub.net", unsigned int port = 1883, unsigned int keepalive = 60);
         void autoconfigure();
         void disconnect();
         void send();
