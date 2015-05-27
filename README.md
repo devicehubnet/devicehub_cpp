@@ -1,8 +1,33 @@
-DeviceHub C++ library
-=====================
+DeviceHub.net C++ library
+=========================
+
+This library wraps around DeviceHub.net's REST and MQTT APIs and allows you to easily connect to the DeviceHub.net PaaS from C++ code.
+
+Requirements
+------------
+* C++11 compiler (gcc or clang)
+* mosquitto C & C++ library
+* libcurl
+* openssl development package
+* uuid-dev
+
+Installation
+------------
 
 Linux
 -----
+Install dependancies:
+```
+sudo apt-get install libmosquitto libmosquittopp libcurl4-openssl-dev uuid-dev libssl-dev
+```
+Build:
+```
+mkdir build
+cd build
+cmake ..
+make
+```
+
 
 RaspberryPi
 -----------
