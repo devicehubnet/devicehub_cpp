@@ -1,10 +1,10 @@
 project(devicehub_cpp)
 cmake_minimum_required(VERSION 2.8)
 
-set(VERSION "0.0.1")
+set(VERSION "0.0.2")
 
 aux_source_directory(devicehub SRC_LIB_LIST)
-aux_source_directory(src SRC_LIST)
+aux_source_directory(examples SRC_LIST)
 
 cmake_policy(SET CMP0016 OLD)
 
@@ -19,8 +19,6 @@ include_directories("${CMAKE_SOURCE_DIR}/devicehub")
 SET(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 
 SET(CMAKE_BUILD_TYPE Debug)
-
-
 
 if(APPLE)
     cmake_policy(SET CMP0042 OLD)
@@ -119,4 +117,3 @@ SET(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
 set(CPACK_COMPONENTS_ALL applications libraries headers)
 
 INCLUDE(CPack)
-
