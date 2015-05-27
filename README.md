@@ -6,6 +6,7 @@ This library wraps around DeviceHub.net's REST and MQTT APIs and allows you to e
 Requirements
 ------------
 * C++11 compiler (gcc or clang)
+* cmake build system
 * mosquitto C & C++ library
 * libcurl
 * openssl development package
@@ -22,7 +23,7 @@ For Ubuntu:
 ```
 sudo add-apt-repository ppa:mosquitto-dev/mosquitto-ppa
 sudo apt-get update
-sudo apt-get install libmosquitto-dev libmosquittopp-dev libcurl4-openssl-dev uuid-dev libssl-dev
+sudo apt-get install cmake libmosquitto-dev libmosquittopp-dev libcurl4-openssl-dev uuid-dev libssl-dev
 ```
 
 Build:
