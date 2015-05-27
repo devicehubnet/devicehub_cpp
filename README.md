@@ -20,7 +20,7 @@ Install dependencies:
 
 For Ubuntu:
 ```
-add-apt-repository ppa:mosquitto-dev/mosquitto-ppa
+sudo add-apt-repository ppa:mosquitto-dev/mosquitto-ppa
 sudo apt-get update
 sudo apt-get install libmosquitto libmosquittopp libcurl4-openssl-dev uuid-dev libssl-dev
 ```
