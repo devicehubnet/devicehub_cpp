@@ -16,7 +16,8 @@ Installation
 
 Linux
 -----
-Install dependancies:
+Install dependencies:
+
 For Ubuntu:
 ```
 add-apt-repository ppa:mosquitto-dev/mosquitto-ppa
