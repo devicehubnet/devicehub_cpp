@@ -64,7 +64,7 @@ void devicehub::DeviceHub::send() {
             mqtt_topic << "/sensor/" << outer_iter->first;
             mqtt_topic << "/data";
 
-            mqtt_payload << inner_iter->second;
+            mqtt_payload << "{ \"value\":"<<inner_iter->second<<" }";
 
             clog << "DEBUG: MQTT TOPIC: "<< mqtt_topic.str()<<endl;
             publish(&mid, mqtt_topic.str().c_str(), mqtt_payload.str().length(), mqtt_payload.str().c_str());

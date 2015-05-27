@@ -9,11 +9,11 @@ using namespace std;
 using namespace devicehub;
 
 // Project API key
-api_key_t     myApiKey    = "a8b274d9-4484-4103-8214-e6db353abbd9";
+api_key_t     myApiKey    = "c0240384-6430-494b-ad7c-a2d4e2827630";
 // Project ID
-project_id_t  myProjectId = 235;
+project_id_t  myProjectId = 313;
 // Device UUID
-device_uuid_t myDeviceId  = "887ffe97-0719-4562-94db-91a86e2e7c49";
+device_uuid_t myDeviceId  = "9c7ea605-bdce-4ec4-b57f-214020c9166f";
 
 bool run = true;
 
