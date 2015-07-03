@@ -68,6 +68,14 @@ void devicehub::DeviceHub::send() {
 
             clog << "DEBUG: MQTT TOPIC: "<< mqtt_topic.str()<<endl;
             publish(&mid, mqtt_topic.str().c_str(), mqtt_payload.str().length(), mqtt_payload.str().c_str(), 0, true);
+
+            auto next_iter = inner_iter;
+            inner_iter++;
+
+            outer_iter->second.erase(next_iter);
+            if(inner_iter == outer_iter->second.end()) {
+              break;
+            }
         }
     }
 }
